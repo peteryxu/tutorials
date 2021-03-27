@@ -1,0 +1,50 @@
+# This is a basic workflow that is manually triggered
+
+name: Manual merge upstream
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      name:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: 'Want to sync with Eugen Tutorials Repo?'
+        # Default value if no value is explicitly provided
+        default: 'YES'
+        # Input has to be provided for the workflow to run
+        required: true
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "greet"
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Merge upstream
+        run: |
+          git config --global user.name 'peteryxu'
+          git config --global user.email 'peteryxu@users.noreply.github.com'
+
+          # "git checkout master" is unnecessary, already here by default
+          git pull --unshallow  # this option is very important, you would get
+                                # complains about unrelated histories without it.
+                                # (but actions/checkout@v2 can also be instructed
+                                # to fetch all git depth right from the start)
+
+          git remote add upstream https://github.com/eugenp/tutorials.git
+          git fetch upstream
+
+          # Neither forget the -b opt,
+          # the feature/x ref is ambiguous at this stage
+          # git checkout -b feature/x origin/feature/x
+          # git merge --no-edit upstream/feature/x
+          # git push origin feature/x
+
+          git checkout master
+          git merge --no-edit upstream/master
+          git push origin master
+
+          # etc
