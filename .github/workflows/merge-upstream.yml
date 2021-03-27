@@ -1,6 +1,6 @@
 # .github/workflows/mergeupstream.yml
 
-name: Merge upstream branches
+name: Daily Auto Merge Upstream Branches
 on:
   schedule:
      # actually, ~5 minutes is the highest
