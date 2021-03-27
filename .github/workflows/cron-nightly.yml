@@ -2,7 +2,7 @@
 # https://crontab.guru/examples.html 
 
 # Give the workflow a name. 
-name: Cron Nightly Build
+name: Status Check Cron Nightly or On-Demand
 
 # Trigger Workflow every midnight UTC
 
