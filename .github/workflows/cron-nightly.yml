@@ -1,0 +1,30 @@
+# .github/workflows/cron.yml
+# https://crontab.guru/examples.html 
+
+# Give the workflow a name. 
+name: Cron: Nightly Build
+
+# Trigger Workflow every midnight UTC
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  
+  workflow_dispatch: 
+#workflow_dispatch helps run workflow anytime with a single click. 
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    name: Scheduling
+    # make sure to run this action in Linux env (say ubuntu)
+    runs-on: ubuntu-latest
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v2
+      - name: change dir
+        run: |
+          git config --global user.name 'peteryxu'
+          cd /
+          ls
+
+
